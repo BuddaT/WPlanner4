@@ -1,5 +1,7 @@
 package net.buddat.wplanner;
 
+import appinstance.FileListener;
+import appinstance.FileListenerException;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -38,13 +40,18 @@ public class WPlanner extends Application {
 			// Another instance is already running.
 			// TODO: Pass any arguments to first instance via argument file.
 			if (args.length > 0) {
-
 			} else {
 				JOptionPane.showMessageDialog(null,
 						"Application is already running. Exiting.");
 				System.exit(0);
 			}
 		} else {
+            try {
+                // TODO: Replace WPlanner with constant
+                new FileListener("WPlanner").listen();
+            } catch (FileListenerException e) {
+                // can't listen for opening files
+            }
 			launch();
         }
     }

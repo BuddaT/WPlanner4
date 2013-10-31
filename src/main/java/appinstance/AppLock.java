@@ -18,11 +18,9 @@ import java.util.logging.Logger;
  * This class is not thread-safe.
  */
 public final class AppLock {
-    private static final String FILE_SEPARATOR = System.getProperty("file.separator");
-
     /** The lock_file. */
     private final File lockFile;
- 
+
     /** The lock. */
     private final FileLock lock;
  
@@ -33,12 +31,7 @@ public final class AppLock {
     private final FileOutputStream lockStream;
     
     private final static Logger LOGGER = Logger.getLogger(AppLock.class.getName());
- 
-    private String generateHash(String key) throws NoSuchAlgorithmException {
-        java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
-        md.reset();
-        return String.format("%032x", new java.math.BigInteger(1, md.digest(key.getBytes())));
-    }
+
     /**
      * Instantiates a new app lock.
      *
@@ -46,26 +39,8 @@ public final class AppLock {
      * @throws Exception The exception
      */
     private AppLock(String key) throws Exception {
-        String tmp_dir = System.getProperty("java.io.tmpdir");
-        if (!tmp_dir.endsWith(FILE_SEPARATOR)) {
-            tmp_dir += FILE_SEPARATOR;
-        }
- 
-        File newLockFile = null;
-        // Acquire MD5
-        try {
-            String hash_text = generateHash(key);
-            newLockFile = new File(tmp_dir + hash_text + ".app_lock");
-        } catch (NoSuchAlgorithmException e) {
-            LOGGER.log(Level.SEVERE, "Couldn't generate hash for application lock file", e);
-        }
- 
-        // MD5 acquire fail
-        if (newLockFile == null) {
-            newLockFile = new File(tmp_dir + key + ".app_lock");
-        }
-        lockFile = newLockFile;
- 
+        lockFile = new SingletonFileBuilder().buildSingletonFile(key, "app_lock");
+
         lockStream = new FileOutputStream(lockFile);
  
         String f_content = "Java AppLock Object\r\nLocked by key: " + key
