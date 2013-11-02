@@ -1,5 +1,6 @@
 package net.buddat.wplanner.settings;
 
+import java.util.ArrayList;
 
 public class AppSettings {
 
@@ -11,6 +12,10 @@ public class AppSettings {
 
 	public static final String SETTINGS_FILE = PROGRAM_NAME.toLowerCase()
 			+ ".cfg";
+
+	public static final String RESOURCE_URL = "http://buddat.net/wplanner/lib/";
+	public static final ArrayList<String> RESOURCE_LIST = new ArrayList<String>();
+
 	/*
 	 * Only return the MAJOR & MIDI versions as this is used for file storage,
 	 * namely maps.
@@ -19,4 +24,11 @@ public class AppSettings {
 		return VERSION_MAJOR + "." + VERSION_MIDI;
 	}
 
+	static {
+		RESOURCE_LIST.add("res_tiles.zip");
+		// RESOURCE_LIST.add("res_houses.zip");
+		// RESOURCE_LIST.add("res_fences.zip");
+		// RESOURCE_LIST.add("res_objects.zip");
+		// RESOURCE_LIST.add("res_misc.zip");
+	}
 }

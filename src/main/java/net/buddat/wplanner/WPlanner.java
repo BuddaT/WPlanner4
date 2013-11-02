@@ -14,6 +14,8 @@ import javax.swing.JOptionPane;
 
 import net.buddat.wplanner.settings.AppSettings;
 import net.buddat.wplanner.settings.Settings;
+import net.buddat.wplanner.util.IOUtils;
+import net.buddat.wplanner.util.Updater;
 import appinstance.AppLock;
 import appinstance.FileListener;
 import appinstance.FileListenerException;
@@ -45,8 +47,7 @@ public class WPlanner extends Application {
 	public static void main(String[] args) {
 		Settings.loadSettings();
 
-		if (Boolean.parseBoolean(Settings
-				.getSetting(Settings.CFG_SINGLE_INSTANCE_KEY)) == true) {
+		if (Settings.getBoolean(Settings.CFG_SINGLE_INSTANCE_KEY) == true) {
 			if (!AppLock.setLock(AppSettings.PROGRAM_NAME)) {
 				// Another instance is already running.
 				if (args.length > 0) {
@@ -54,8 +55,9 @@ public class WPlanner extends Application {
 				} else {
 					JOptionPane.showMessageDialog(null,
 							"Application is already running. Exiting.");
-					System.exit(0);
 				}
+
+				System.exit(0);
 			} else {
 				try {
 					new FileListener(AppSettings.PROGRAM_NAME).listen();
@@ -75,7 +77,12 @@ public class WPlanner extends Application {
     }
 
 	private static void init(String[] args) {
-		// TODO: Auto-update resources if set to
+		if (Settings.getBoolean(Settings.CFG_AUTOUPDATE_KEY) == true) {
+			for (String res : AppSettings.RESOURCE_LIST)
+				Updater.update(res, AppSettings.RESOURCE_URL,
+					IOUtils.getUserDataDirectoryString());
+		}
+
 		// TODO: Load map if argument exists.
 		launch();
 	}

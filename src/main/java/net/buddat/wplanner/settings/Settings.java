@@ -15,6 +15,9 @@ import net.buddat.wplanner.util.IOUtils;
 
 public class Settings {
 
+	// Force a remake of the config file each time the app is launched
+	public static final boolean DEV_REMAKE_CONFIG = true;
+
 	private static HashMap<String, String> defaultSettingsMap = new HashMap<String, String>();
 	private static HashMap<String, String> settingsMap = new HashMap<String, String>();
 
@@ -25,7 +28,7 @@ public class Settings {
 		File settingsFile = new File(IOUtils.getUserDataDirectoryString()
 				+ AppSettings.SETTINGS_FILE);
 
-		if (!settingsFile.exists()) {
+		if (!settingsFile.exists() || DEV_REMAKE_CONFIG) {
 			createDefaultSettings(settingsFile);
 			settingsMap.putAll(defaultSettingsMap);
 
@@ -54,6 +57,14 @@ public class Settings {
 		}
 
 		return true;
+	}
+
+	public static boolean getBoolean(String key) {
+		return Boolean.parseBoolean(getSetting(key));
+	}
+
+	public static int getInt(String key) {
+		return Integer.parseInt(getSetting(key));
 	}
 
 	public static String getSetting(String key) {
@@ -107,11 +118,13 @@ public class Settings {
 		bw.close();
 	}
 
-	public static final String CFG_SINGLE_INSTANCE_KEY = "useSingleInstance";
-	public static final String CFG_SINGLE_INSTANCE_VALUE = "true";
+	public static final String CFG_SINGLE_INSTANCE_KEY = "useSingleInstance",
+			CFG_AUTOUPDATE_KEY = "autoUpdate";
+	public static final String CFG_SINGLE_INSTANCE_VALUE = "true",
+			CFG_AUTOUPDATE_VALUE = "true";
 
 	static {
-		defaultSettingsMap.put(CFG_SINGLE_INSTANCE_KEY,
-				CFG_SINGLE_INSTANCE_VALUE);
+		defaultSettingsMap.put(CFG_SINGLE_INSTANCE_KEY, CFG_SINGLE_INSTANCE_VALUE);
+		defaultSettingsMap.put(CFG_AUTOUPDATE_KEY, CFG_AUTOUPDATE_VALUE);
 	}
 }
