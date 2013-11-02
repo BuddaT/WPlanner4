@@ -1,18 +1,15 @@
 package appinstance;
 
-import org.apache.commons.io.input.Tailer;
-import org.apache.commons.io.input.TailerListener;
-import org.apache.commons.io.input.TailerListenerAdapter;
-
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
+
+import org.apache.commons.io.input.Tailer;
+import org.apache.commons.io.input.TailerListenerAdapter;
 
 /**
  * Monitors the input file that tells us when a new instance has requested that we open a file.
@@ -28,13 +25,13 @@ public class FileListener extends TailerListenerAdapter {
 
     private final File listenFile;
 
-    private ReentrantLock lock = new ReentrantLock();
+    private final ReentrantLock lock = new ReentrantLock();
 
     private Tailer tailer;
 
     private boolean isListening = false;
 
-    private CountDownLatch deleteSignal = new CountDownLatch(1);
+    private final CountDownLatch deleteSignal = new CountDownLatch(1);
 
     public FileListener(String key) throws FileListenerException {
         listenFile = new SingletonFileBuilder().buildSingletonFile(key, "listen");
@@ -50,7 +47,6 @@ public class FileListener extends TailerListenerAdapter {
     }
 
     public void listen() {
-        System.out.println("before lock");
         lock.lock();
         try {
             System.out.println("Listening to file " + listenFile.getName());
