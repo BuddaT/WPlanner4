@@ -16,7 +16,7 @@ import net.buddat.wplanner.util.IOUtils;
 public class Settings {
 
 	// Force a remake of the config file each time the app is launched
-	public static final boolean DEV_REMAKE_CONFIG = true;
+	public static final boolean DEV_REMAKE_CONFIG = false;
 
 	private static HashMap<String, String> defaultSettingsMap = new HashMap<String, String>();
 	private static HashMap<String, String> settingsMap = new HashMap<String, String>();
@@ -118,13 +118,25 @@ public class Settings {
 		bw.close();
 	}
 
-	public static final String CFG_SINGLE_INSTANCE_KEY = "useSingleInstance",
-			CFG_AUTOUPDATE_KEY = "autoUpdate";
+	public static final String CFG_SINGLE_INSTANCE_KEY = "core.useSingleInstance",
+			CFG_AUTOUPDATE_KEY = "core.autoUpdate",
+			CFG_WINDOW_POSX_KEY = "gui.windowPosX",
+			CFG_WINDOW_POSY_KEY = "gui.windowPosY",
+			CFG_WINDOW_WIDTH_KEY = "gui.windowWidth",
+			CFG_WINDOW_HEIGHT_KEY = "gui.windowHeight";
 	public static final String CFG_SINGLE_INSTANCE_VALUE = "true",
-			CFG_AUTOUPDATE_VALUE = "true";
+			CFG_AUTOUPDATE_VALUE = "true",
+			CFG_WINDOW_POSX_VALUE = "0",
+			CFG_WINDOW_POSY_VALUE = "0",
+			CFG_WINDOW_WIDTH_VALUE = "800",
+			CFG_WINDOW_HEIGHT_VALUE = "600";
 
 	static {
 		defaultSettingsMap.put(CFG_SINGLE_INSTANCE_KEY, CFG_SINGLE_INSTANCE_VALUE);
 		defaultSettingsMap.put(CFG_AUTOUPDATE_KEY, CFG_AUTOUPDATE_VALUE);
+		defaultSettingsMap.put(CFG_WINDOW_POSX_KEY, CFG_WINDOW_POSX_VALUE);
+		defaultSettingsMap.put(CFG_WINDOW_POSY_KEY, CFG_WINDOW_POSY_VALUE);
+		defaultSettingsMap.put(CFG_WINDOW_WIDTH_KEY, CFG_WINDOW_WIDTH_VALUE);
+		defaultSettingsMap.put(CFG_WINDOW_HEIGHT_KEY, CFG_WINDOW_HEIGHT_VALUE);
 	}
 }

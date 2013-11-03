@@ -26,22 +26,41 @@ public class WPlanner extends Application {
 			.getName());
 
 	@Override
-	public void start(Stage primaryStage) throws Exception {
+	public void start(final Stage primaryStage) throws Exception {
 		Group rootGroup = new Group();
-		Scene rootScene = new Scene(rootGroup, 800, 600);
+		Scene rootScene = new Scene(rootGroup,
+				Settings.getInt(Settings.CFG_WINDOW_WIDTH_KEY),
+				Settings.getInt(Settings.CFG_WINDOW_HEIGHT_KEY));
+
+		if (Settings.getInt(Settings.CFG_WINDOW_POSX_KEY) != 0
+				&& Settings.getInt(Settings.CFG_WINDOW_POSY_KEY) != 0) {
+			primaryStage.setX(Settings.getInt(Settings.CFG_WINDOW_POSX_KEY));
+			primaryStage.setY(Settings.getInt(Settings.CFG_WINDOW_POSY_KEY));
+		}
 
 		primaryStage.setScene(rootScene);
 		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
 			public void handle(WindowEvent w) {
-				// TODO: Prompt to save, clean up etc.
+				// TODO: Prompt to save, clean up etc
+				Settings.setSetting(Settings.CFG_WINDOW_POSX_KEY, ""
+						+ (int) primaryStage.getX(), false);
+				Settings.setSetting(Settings.CFG_WINDOW_POSY_KEY, ""
+						+ (int) primaryStage.getY(), false);
+				Settings.setSetting(Settings.CFG_WINDOW_WIDTH_KEY, ""
+						+ (int) primaryStage.getWidth(), false);
+				Settings.setSetting(Settings.CFG_WINDOW_HEIGHT_KEY, ""
+						+ (int) primaryStage.getHeight(), false);
+
 				Settings.saveSettings();
 				System.exit(0);
 			}
 			
 		});
 		primaryStage.show();
+
+		// TODO: Load map if argument exists.
 	}
 
 	public static void main(String[] args) {
@@ -83,7 +102,6 @@ public class WPlanner extends Application {
 					IOUtils.getUserDataDirectoryString());
 		}
 
-		// TODO: Load map if argument exists.
 		launch();
 	}
 
