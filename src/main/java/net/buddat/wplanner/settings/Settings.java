@@ -64,13 +64,28 @@ public class Settings {
 	}
 
 	public static int getInt(String key) {
-		return Integer.parseInt(getSetting(key));
+		int toReturn;
+		try {
+			toReturn = Integer.parseInt(getSetting(key));
+		} catch (NumberFormatException e) {
+			setSetting(key, getDefaultSetting(key), true);
+			toReturn = Integer.parseInt(getSetting(key));
+		}
+
+		return toReturn;
 	}
 
 	public static String getSetting(String key) {
 		if (settingsMap.containsKey(key))
 			return settingsMap.get(key);
 
+		if (defaultSettingsMap.containsKey(key))
+			return defaultSettingsMap.get(key);
+
+		return null;
+	}
+
+	private static String getDefaultSetting(String key) {
 		if (defaultSettingsMap.containsKey(key))
 			return defaultSettingsMap.get(key);
 
