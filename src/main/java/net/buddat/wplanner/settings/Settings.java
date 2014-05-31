@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.JOptionPane;
+
 import net.buddat.wplanner.util.IOUtils;
 
 public class Settings {
@@ -25,8 +27,7 @@ public class Settings {
 			.getName());
 
 	public static void loadSettings() {
-		File settingsFile = new File(IOUtils.getUserDataDirectoryString()
-				+ AppSettings.SETTINGS_FILE);
+		File settingsFile = new File(AppSettings.SETTINGS_FILE);
 
 		if (!settingsFile.exists() || DEV_REMAKE_CONFIG) {
 			createDefaultSettings(settingsFile);
@@ -45,8 +46,7 @@ public class Settings {
 	}
 
 	public static boolean saveSettings() {
-		File settingsFile = new File(IOUtils.getUserDataDirectoryString()
-				+ AppSettings.SETTINGS_FILE);
+		File settingsFile = new File(AppSettings.SETTINGS_FILE);
 
 		try {
 			writeSettings(settingsFile, settingsMap);
@@ -105,6 +105,7 @@ public class Settings {
 			f.createNewFile();
 			writeSettings(f, defaultSettingsMap);
 		} catch (IOException ioe) {
+			JOptionPane.showMessageDialog(null, "Unable to write settings file, are you running as Administrator?");
 			LOGGER.log(Level.WARNING, "Unable to write default settings file: "
 					+ f.getAbsolutePath());
 			ioe.printStackTrace();
@@ -138,13 +139,17 @@ public class Settings {
 			CFG_WINDOW_POSX_KEY = "gui.windowPosX",
 			CFG_WINDOW_POSY_KEY = "gui.windowPosY",
 			CFG_WINDOW_WIDTH_KEY = "gui.windowWidth",
-			CFG_WINDOW_HEIGHT_KEY = "gui.windowHeight";
+			CFG_WINDOW_HEIGHT_KEY = "gui.windowHeight", 
+			CFG_LOG_ROTATE_KEY = "log.rotate",
+			CFG_LOG_ROTATE_COUNT_KEY = "log.rotateCount";
 	public static final String CFG_SINGLE_INSTANCE_VALUE = "true",
 			CFG_AUTOUPDATE_VALUE = "true",
 			CFG_WINDOW_POSX_VALUE = "0",
 			CFG_WINDOW_POSY_VALUE = "0",
 			CFG_WINDOW_WIDTH_VALUE = "800",
-			CFG_WINDOW_HEIGHT_VALUE = "600";
+			CFG_WINDOW_HEIGHT_VALUE = "600", 
+			CFG_LOG_ROTATE_VALUE = "5242880", 
+			CFG_LOG_ROTATE_COUNT_VALUE = "3";
 
 	static {
 		defaultSettingsMap.put(CFG_SINGLE_INSTANCE_KEY, CFG_SINGLE_INSTANCE_VALUE);
@@ -153,5 +158,7 @@ public class Settings {
 		defaultSettingsMap.put(CFG_WINDOW_POSY_KEY, CFG_WINDOW_POSY_VALUE);
 		defaultSettingsMap.put(CFG_WINDOW_WIDTH_KEY, CFG_WINDOW_WIDTH_VALUE);
 		defaultSettingsMap.put(CFG_WINDOW_HEIGHT_KEY, CFG_WINDOW_HEIGHT_VALUE);
+		defaultSettingsMap.put(CFG_LOG_ROTATE_KEY, CFG_LOG_ROTATE_VALUE);
+		defaultSettingsMap.put(CFG_LOG_ROTATE_COUNT_KEY, CFG_LOG_ROTATE_COUNT_VALUE);
 	}
 }

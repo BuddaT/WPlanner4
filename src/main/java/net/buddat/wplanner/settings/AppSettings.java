@@ -2,6 +2,8 @@ package net.buddat.wplanner.settings;
 
 import java.util.ArrayList;
 
+import net.buddat.wplanner.util.IOUtils;
+
 public class AppSettings {
 
 	public static final String PROGRAM_NAME = "WPlanner";
@@ -10,11 +12,13 @@ public class AppSettings {
 			VERSION_MIDI = 0, // Changes to save file that may break backwards compatibility
 			VERSION_MINOR = 0; // Small updates
 
-	public static final String SETTINGS_FILE = PROGRAM_NAME.toLowerCase()
+	public static final String SETTINGS_FILE = IOUtils.getUserDataDirectoryString() + PROGRAM_NAME.toLowerCase()
 			+ ".cfg";
 
 	public static final String RESOURCE_URL = "http://buddat.net/wplanner/lib/";
 	public static final ArrayList<String> RESOURCE_LIST = new ArrayList<String>();
+
+	public static final String LOG_FILE = IOUtils.getUserDataDirectoryString() + PROGRAM_NAME.toLowerCase() + ".log";
 
 	/*
 	 * Only return the MAJOR & MIDI versions as this is used for file storage,

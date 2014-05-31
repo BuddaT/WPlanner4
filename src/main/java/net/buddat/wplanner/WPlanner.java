@@ -1,9 +1,11 @@
 package net.buddat.wplanner;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -22,7 +24,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
 import net.buddat.wplanner.settings.AppSettings;
@@ -100,13 +101,6 @@ public class WPlanner extends Application {
 		
 		ToolBar toolBar = new ToolBar();
 		{
-			try {
-				BufferedImage finalImg = ImageIO.read(getClass()
-						.getResourceAsStream("/data/gui/pointer.png"));
-				java.awt.Image toUse = finalImg.getScaledInstance(16, 16, BufferedImage.SCALE_SMOOTH);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 			ImageView testView = new ImageView(new Image(
 					"/data/gui/pointer.png", 24, 24, true, true));
 
@@ -120,8 +114,7 @@ public class WPlanner extends Application {
 
 			});
 
-			testButton
-					.setStyle("-fx-padding: 0 0 0 0; -fx-outer-border: white;"
+			testButton.setStyle("-fx-padding: 0 0 0 0; -fx-outer-border: white;"
 							+ " -fx-background-color: -fx-outer-border, -fx-body-color;"
 							+ " -fx-background-insets: 0, 0; -fx-background-radius: 0px, 0px;");
 			testButton.setScaleX(0.75);
@@ -153,6 +146,22 @@ public class WPlanner extends Application {
 	public static void main(String[] args) {
 		Settings.loadSettings();
 
+		try {
+			Handler handler = new FileHandler(AppSettings.LOG_FILE, Settings.getInt(Settings.CFG_LOG_ROTATE_KEY),
+					Settings.getInt(Settings.CFG_LOG_ROTATE_COUNT_KEY), true);
+			handler.setFormatter(new SimpleFormatter());
+			Logger.getLogger("").addHandler(handler);
+		} catch (SecurityException e1) {
+			JOptionPane.showMessageDialog(null, "Unable to create log file. Running as administrator?");
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			JOptionPane.showMessageDialog(null, "Unable to write to log file.");
+			e1.printStackTrace();
+		}
+
+		LOGGER.info("==== Starting " + AppSettings.PROGRAM_NAME + " v" + AppSettings.getVersionString() + "."
+				+ AppSettings.VERSION_MINOR + " ====");
+
 		if (Settings.getBoolean(Settings.CFG_SINGLE_INSTANCE_KEY) == true) {
 			if (!AppLock.setLock(AppSettings.PROGRAM_NAME)) {
 				// Another instance is already running.
@@ -171,7 +180,7 @@ public class WPlanner extends Application {
 					LOGGER.log(
 							Level.WARNING,
 							"Unable to listen to file for additional maps to open. Disabling single-instance.");
-					Settings.setSetting(Settings.CFG_SINGLE_INSTANCE_KEY,
+							Settings.setSetting(Settings.CFG_SINGLE_INSTANCE_KEY,
 							"false", true);
 				}
 
@@ -185,8 +194,9 @@ public class WPlanner extends Application {
 	private static void init(String[] args) {
 		if (Settings.getBoolean(Settings.CFG_AUTOUPDATE_KEY) == true) {
 			for (String res : AppSettings.RESOURCE_LIST)
-				Updater.update(res, AppSettings.RESOURCE_URL,
-					IOUtils.getUserDataDirectoryString());
+				if (!Updater.update(res, AppSettings.RESOURCE_URL, IOUtils.getUserDataDirectoryString()))
+					JOptionPane.showMessageDialog(null, "Unable to download file: " + res
+							+ "\r\nAttempting to start WPlanner anyway...");
 		}
 
 		launch();
