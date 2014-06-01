@@ -34,6 +34,7 @@ import javax.swing.JOptionPane;
 import net.buddat.wplanner.settings.AppSettings;
 import net.buddat.wplanner.settings.Settings;
 import net.buddat.wplanner.ui.ButtonBuilder;
+import net.buddat.wplanner.ui.Canvas2D;
 import net.buddat.wplanner.util.IOUtils;
 import net.buddat.wplanner.util.Updater;
 import appinstance.AppLock;
@@ -118,6 +119,9 @@ public class WPlanner extends Application {
 					.createToolbarButton("/data/gui/picture11.png", null, "Save the current map as an image");
 			Button view3DButton = ButtonBuilder
 					.createToolbarButton("/data/gui/3d51.png", null, "View the current map in 3d");
+
+			Button spacerOne = ButtonBuilder.createToolbarButton("/data/gui/empty.png", null, null);
+
 			ToggleButton pointerButton = ButtonBuilder
 					.createToolbarToggleButton("/data/gui/cursor12.png", null, null);
 			ToggleButton penButton = ButtonBuilder
@@ -127,8 +131,8 @@ public class WPlanner extends Application {
 			mainToolbarButtonsGroup = new ToggleGroup();
 			mainToolbarButtonsGroup.getToggles().addAll(pointerButton, penButton);
 
-			toolBar.getItems().addAll(newButton, openButton, saveButton, saveImageButton, view3DButton, pointerButton,
-					penButton);
+			toolBar.getItems().addAll(newButton, openButton, saveButton, saveImageButton, view3DButton, spacerOne,
+					pointerButton, penButton);
 			toolBar.autosize();
 		}
 
@@ -144,9 +148,9 @@ public class WPlanner extends Application {
 			homeTab.setContent(homeContent);
 			homeTab.setClosable(false);
 
-			// Tab canvasTabTest = Canvas2D.buildCanvasTab(this, tabPane, "New Map");
+			Tab canvasTabTest = Canvas2D.buildCanvasTab(this, tabPane, "New Map");
 
-			tabPane.getTabs().addAll(homeTab);
+			tabPane.getTabs().addAll(homeTab, canvasTabTest);
 
 			tabBorderPane.prefHeightProperty().bind(s.heightProperty());
 			tabBorderPane.prefWidthProperty().bind(s.widthProperty());

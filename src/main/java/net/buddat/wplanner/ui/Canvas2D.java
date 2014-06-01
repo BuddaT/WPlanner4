@@ -33,11 +33,14 @@ public class Canvas2D extends Canvas {
 	}
 
 	public void updateCanvas() {
-		gc.setFill(Color.BLUE);
+		gc.setFill(Color.LIGHTBLUE);
 		gc.fillRect(0, 0, this.getWidth(), this.getHeight());
 
-		gc.setFill(Color.RED);
-		gc.fillRect(0, 0, this.getWidth() / 2, this.getHeight() / 2);
+		for (int i = 0; i <= this.getWidth() / 32; i++)
+			for (int j = 0; j <= this.getHeight() / 32; j++) {
+				gc.setStroke(Color.BLACK);
+				gc.strokeRect(i * 32, j * 32, 32, 32);
+			}
 	}
 
 	public WPlanner getMainApp() {
