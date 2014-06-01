@@ -16,9 +16,8 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.ToolBar;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -28,6 +27,7 @@ import javax.swing.JOptionPane;
 
 import net.buddat.wplanner.settings.AppSettings;
 import net.buddat.wplanner.settings.Settings;
+import net.buddat.wplanner.ui.ButtonBuilder;
 import net.buddat.wplanner.util.IOUtils;
 import net.buddat.wplanner.util.Updater;
 import appinstance.AppLock;
@@ -69,6 +69,7 @@ public class WPlanner extends Application {
 			
 		});
 
+		rootScene.getStylesheets().add(WPlanner.class.getResource("/data/gui/gui.css").toExternalForm());
 		setPrimaryScene(rootScene);
 
 		primaryStage.setScene(rootScene);
@@ -87,12 +88,10 @@ public class WPlanner extends Application {
 			MenuItem quit = new MenuItem("Exit");
 			quit.setAccelerator(KeyCombination.keyCombination("ALT+F4"));
 			quit.setOnAction(new EventHandler<ActionEvent>() {
-
 				@Override
 				public void handle(ActionEvent t) {
 					close();
 				}
-
 			});
 			menuFile.getItems().addAll(new SeparatorMenuItem(), quit);
 
@@ -101,27 +100,13 @@ public class WPlanner extends Application {
 		
 		ToolBar toolBar = new ToolBar();
 		{
-			ImageView testView = new ImageView(new Image(
-					"/data/gui/pointer.png", 24, 24, true, true));
+			ToggleButton pointerButton = ButtonBuilder.createToolbarButton("/data/gui/pointer.png", null, null);
+			ToggleButton penButton = ButtonBuilder.createToolbarButton("/data/gui/pen.png", null, "test tooltip");
+			
+			ToggleGroup mainGroup = new ToggleGroup();
+			mainGroup.getToggles().addAll(pointerButton, penButton);
 
-			ToggleButton testButton = new ToggleButton(null, testView);
-			testButton.setOnAction(new EventHandler<ActionEvent>() {
-
-				@Override
-				public void handle(ActionEvent arg0) {
-					close();
-				}
-
-			});
-
-			testButton.setStyle("-fx-padding: 0 0 0 0; -fx-outer-border: white;"
-							+ " -fx-background-color: -fx-outer-border, -fx-body-color;"
-							+ " -fx-background-insets: 0, 0; -fx-background-radius: 0px, 0px;");
-			testButton.setScaleX(0.75);
-			testButton.setScaleY(0.75);
-			toolBar.setStyle("-fx-padding: 0 0 0 0; -fx-background-color: -fx-outer-border, -fx-body-color;");
-
-			toolBar.getItems().add(testButton);
+			toolBar.getItems().addAll(pointerButton, penButton);
 			toolBar.autosize();
 		}
 

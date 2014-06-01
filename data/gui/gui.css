@@ -1,0 +1,56 @@
+.tooltip {
+	-fx-background-color: #d0d0d0;
+	-fx-background-radius: 0 0 0 0;
+	-fx-padding: 2 4 2 2;
+}
+.page-corner {
+	-fx-padding: 0 0 0 0;
+	-fx-background-color: transparent;
+}
+.menu-bar {
+	-fx-padding: 0 0 0 0;
+	-fx-background-color: #6f6f6f;
+}
+.context-menu {
+	-fx-padding: 1 1 1 1;
+	-fx-background-color: #afafaf;
+	-fx-background-insets: 0, 0; 
+	-fx-background-radius: 0px, 0px;
+}
+.menu-item {
+	-fx-background-color: #dfdfdf;
+	-fx-background-insets: 0, 0; 
+	-fx-background-radius: 0px, 0px;
+}
+.menu-item  .label {
+	-fx-text-fill: #000000;
+}
+.menu-item:hover {
+	-fx-background-color: #dfdfff;
+}
+.menu-item:hover .label {
+	-fx-text-fill: #000000;
+}
+.menu-button {
+	-fx-padding: 0 0 0 0;
+	-fx-background-color: #6f6f6f;
+}
+.menu-button:hover {
+	-fx-background-color: #6f6fdf;
+}
+.tool-bar {
+	-fx-padding: 1 0 0 0; 
+	-fx-background-color: #dfdfdf;
+}
+.tool-bar-btn {
+	-fx-padding: 0 0 0 0; 
+	-fx-outer-border: white;
+	-fx-background-color: #dfdfdf;
+	-fx-background-insets: 0, 0; 
+	-fx-background-radius: 0px, 0px;
+}
+.tool-bar-btn:selected {
+	-fx-background-color: #bfbfff;
+	-fx-background-insets: 2, 2; 
+	-fx-background-radius: 16px, 16px;
+}

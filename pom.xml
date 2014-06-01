@@ -79,6 +79,7 @@
 	    <directory>.</directory>
 		<includes>
 		  <include>data/*/*.png</include>
+		  <include>data/*/*.css</include>
 		</includes>
 	  </resource>
 	</resources>
