@@ -1,45 +1,51 @@
 .tooltip {
 	-fx-background-color: #d0d0d0;
 	-fx-background-radius: 0 0 0 0;
-	-fx-padding: 2 4 2 2;
+	-fx-padding: 2 4 2 4;
 }
 .page-corner {
 	-fx-padding: 0 0 0 0;
 	-fx-background-color: transparent;
 }
 .menu-bar {
-	-fx-padding: 0 0 0 0;
-	-fx-background-color: #6f6f6f;
+	-fx-padding: 0 4 0 4;
+	-fx-background-color: #3c3c3c;
 }
 .context-menu {
 	-fx-padding: 1 1 1 1;
-	-fx-background-color: #afafaf;
+	-fx-background-color: #3c3c3c;
 	-fx-background-insets: 0, 0; 
 	-fx-background-radius: 0px, 0px;
 }
 .menu-item {
-	-fx-background-color: #dfdfdf;
+	-fx-background-color: #3c3c3c;
 	-fx-background-insets: 0, 0; 
 	-fx-background-radius: 0px, 0px;
 }
 .menu-item  .label {
-	-fx-text-fill: #000000;
+	-fx-text-fill: #96b946;
 }
 .menu-item:hover {
-	-fx-background-color: #dfdfff;
+	-fx-background-color: #96b946;
 }
 .menu-item:hover .label {
-	-fx-text-fill: #000000;
+	-fx-text-fill: #3c3c3c;
 }
 .menu-button {
-	-fx-padding: 0 0 0 0;
-	-fx-background-color: #6f6f6f;
+	-fx-padding: 0 2 0 2;
+	-fx-background-color: #3c3c3c;
+}
+.menu-button .label {
+	-fx-text-fill: #96b946;
 }
 .menu-button:hover {
-	-fx-background-color: #6f6fdf;
+	-fx-background-color: #96b946;
+}
+.menu-button:hover .label {
+	-fx-text-fill: #3c3c3c;
 }
 .tool-bar {
-	-fx-padding: 1 0 0 0; 
+	-fx-padding: 0 2 0 2; 
 	-fx-background-color: #dfdfdf;
 }
 .tool-bar-btn {
@@ -53,4 +59,23 @@
 	-fx-background-color: #bfbfff;
 	-fx-background-insets: 2, 2; 
 	-fx-background-radius: 16px, 16px;
+}
+.tab-hbox {
+	-fx-background-color: #3c3c3c;
+}
+.tab-pane .tab {
+    -fx-background-color: #e6e6e6;
+	-fx-padding: 0 4 0 4; 
+}
+.tab-pane .tab:selected {
+    -fx-background-color: #3c3c3c;
+}
+.tab .tab-label { 
+    -fx-alignment: CENTER;
+    -fx-text-fill: #828282;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+.tab:selected .tab-label { 
+    -fx-text-fill: #96b946;
 }

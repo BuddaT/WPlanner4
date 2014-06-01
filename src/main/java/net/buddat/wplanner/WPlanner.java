@@ -10,15 +10,20 @@ import java.util.logging.SimpleFormatter;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.ToolBar;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -41,6 +46,8 @@ public class WPlanner extends Application {
 
 	private Stage primaryStage;
 	private Scene rootScene;
+
+	private ToggleGroup mainToolbarButtonsGroup;
 
 	@Override
 	public void start(Stage _primaryStage) throws Exception {
@@ -103,14 +110,33 @@ public class WPlanner extends Application {
 			ToggleButton pointerButton = ButtonBuilder.createToolbarButton("/data/gui/pointer.png", null, null);
 			ToggleButton penButton = ButtonBuilder.createToolbarButton("/data/gui/pen.png", null, "test tooltip");
 			
-			ToggleGroup mainGroup = new ToggleGroup();
-			mainGroup.getToggles().addAll(pointerButton, penButton);
+			mainToolbarButtonsGroup = new ToggleGroup();
+			mainToolbarButtonsGroup.getToggles().addAll(pointerButton, penButton);
 
 			toolBar.getItems().addAll(pointerButton, penButton);
 			toolBar.autosize();
 		}
 
-		((VBox) s.getRoot()).getChildren().addAll(menuBar, toolBar);
+		BorderPane tabBorderPane = new BorderPane();
+		{
+			TabPane tabPane = new TabPane();
+			Tab homeTab = new Tab("Home");
+
+			HBox homeContent = new HBox();
+			homeContent.setAlignment(Pos.CENTER);
+			homeContent.getStyleClass().add("tab-hbox");
+
+			homeTab.setContent(homeContent);
+			homeTab.setClosable(false);
+
+			tabPane.getTabs().add(homeTab);
+
+			tabBorderPane.prefHeightProperty().bind(s.heightProperty());
+			tabBorderPane.prefWidthProperty().bind(s.widthProperty());
+			tabBorderPane.setCenter(tabPane);
+		}
+
+		((VBox) s.getRoot()).getChildren().addAll(menuBar, toolBar, tabBorderPane);
 	}
 
 	private void close() {
