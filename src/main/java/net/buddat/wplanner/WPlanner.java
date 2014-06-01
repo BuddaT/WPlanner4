@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -33,7 +34,6 @@ import javax.swing.JOptionPane;
 import net.buddat.wplanner.settings.AppSettings;
 import net.buddat.wplanner.settings.Settings;
 import net.buddat.wplanner.ui.ButtonBuilder;
-import net.buddat.wplanner.ui.Canvas2D;
 import net.buddat.wplanner.util.IOUtils;
 import net.buddat.wplanner.util.Updater;
 import appinstance.AppLock;
@@ -108,13 +108,27 @@ public class WPlanner extends Application {
 		
 		ToolBar toolBar = new ToolBar();
 		{
-			ToggleButton pointerButton = ButtonBuilder.createToolbarButton("/data/gui/pointer.png", null, null);
-			ToggleButton penButton = ButtonBuilder.createToolbarButton("/data/gui/pen.png", null, "test tooltip");
+			Button newButton = ButtonBuilder
+					.createToolbarButton("/data/gui/blank8.png", null, "Create a new map");
+			Button openButton = ButtonBuilder
+					.createToolbarButton("/data/gui/open127.png", null, "Open an existing map");
+			Button saveButton = ButtonBuilder
+					.createToolbarButton("/data/gui/floppy1.png", null, "Save the current map");
+			Button saveImageButton = ButtonBuilder
+					.createToolbarButton("/data/gui/picture11.png", null, "Save the current map as an image");
+			Button view3DButton = ButtonBuilder
+					.createToolbarButton("/data/gui/3d51.png", null, "View the current map in 3d");
+			ToggleButton pointerButton = ButtonBuilder
+					.createToolbarToggleButton("/data/gui/cursor12.png", null, null);
+			ToggleButton penButton = ButtonBuilder
+					.createToolbarToggleButton("/data/gui/pencil5.png", null,
+					"test tooltip");
 			
 			mainToolbarButtonsGroup = new ToggleGroup();
 			mainToolbarButtonsGroup.getToggles().addAll(pointerButton, penButton);
 
-			toolBar.getItems().addAll(pointerButton, penButton);
+			toolBar.getItems().addAll(newButton, openButton, saveButton, saveImageButton, view3DButton, pointerButton,
+					penButton);
 			toolBar.autosize();
 		}
 

@@ -23,6 +23,8 @@ public class Canvas2D extends Canvas {
 	private final GraphicsContext gc;
 
 	private boolean rendering = false;
+	
+	private int cameraXOffset = 0, cameraYOffset = 0;
 
 	public Canvas2D(WPlanner app, double width, double height) {
 		super(width, height);
@@ -40,6 +42,22 @@ public class Canvas2D extends Canvas {
 
 	public WPlanner getMainApp() {
 		return mainApp;
+	}
+
+	public int getCameraXOffset() {
+		return cameraXOffset;
+	}
+
+	public void setCameraXOffset(int cameraXOffset) {
+		this.cameraXOffset = cameraXOffset;
+	}
+
+	public int getCameraYOffset() {
+		return cameraYOffset;
+	}
+
+	public void setCameraYOffset(int cameraYOffset) {
+		this.cameraYOffset = cameraYOffset;
 	}
 
 	public void setRendering(boolean rendering) {
