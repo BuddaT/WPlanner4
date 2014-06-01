@@ -33,6 +33,7 @@ import javax.swing.JOptionPane;
 import net.buddat.wplanner.settings.AppSettings;
 import net.buddat.wplanner.settings.Settings;
 import net.buddat.wplanner.ui.ButtonBuilder;
+import net.buddat.wplanner.ui.Canvas2D;
 import net.buddat.wplanner.util.IOUtils;
 import net.buddat.wplanner.util.Updater;
 import appinstance.AppLock;
@@ -117,26 +118,29 @@ public class WPlanner extends Application {
 			toolBar.autosize();
 		}
 
+		HBox workspaceLayout = new HBox();
 		BorderPane tabBorderPane = new BorderPane();
 		{
 			TabPane tabPane = new TabPane();
-			Tab homeTab = new Tab("Home");
 
+			Tab homeTab = new Tab("Home");
 			HBox homeContent = new HBox();
 			homeContent.setAlignment(Pos.CENTER);
 			homeContent.getStyleClass().add("tab-hbox");
-
 			homeTab.setContent(homeContent);
 			homeTab.setClosable(false);
 
-			tabPane.getTabs().add(homeTab);
+			// Tab canvasTabTest = Canvas2D.buildCanvasTab(this, tabPane, "New Map");
+
+			tabPane.getTabs().addAll(homeTab);
 
 			tabBorderPane.prefHeightProperty().bind(s.heightProperty());
 			tabBorderPane.prefWidthProperty().bind(s.widthProperty());
 			tabBorderPane.setCenter(tabPane);
 		}
 
-		((VBox) s.getRoot()).getChildren().addAll(menuBar, toolBar, tabBorderPane);
+		workspaceLayout.getChildren().addAll(tabBorderPane);
+		((VBox) s.getRoot()).getChildren().addAll(menuBar, toolBar, workspaceLayout);
 	}
 
 	private void close() {

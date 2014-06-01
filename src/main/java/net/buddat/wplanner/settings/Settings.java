@@ -141,7 +141,8 @@ public class Settings {
 			CFG_WINDOW_WIDTH_KEY = "gui.windowWidth",
 			CFG_WINDOW_HEIGHT_KEY = "gui.windowHeight", 
 			CFG_LOG_ROTATE_KEY = "log.rotate",
-			CFG_LOG_ROTATE_COUNT_KEY = "log.rotateCount";
+			CFG_LOG_ROTATE_COUNT_KEY = "log.rotateCount",
+			CFG_CANVAS_FPS_KEY = "canvas.fps";
 	public static final String CFG_SINGLE_INSTANCE_VALUE = "true",
 			CFG_AUTOUPDATE_VALUE = "true",
 			CFG_WINDOW_POSX_VALUE = "0",
@@ -149,7 +150,8 @@ public class Settings {
 			CFG_WINDOW_WIDTH_VALUE = "800",
 			CFG_WINDOW_HEIGHT_VALUE = "600", 
 			CFG_LOG_ROTATE_VALUE = "5242880", 
-			CFG_LOG_ROTATE_COUNT_VALUE = "3";
+			CFG_LOG_ROTATE_COUNT_VALUE = "3",
+			CFG_CANVAS_FPS_VALUE = "60";
 
 	static {
 		defaultSettingsMap.put(CFG_SINGLE_INSTANCE_KEY, CFG_SINGLE_INSTANCE_VALUE);
@@ -160,5 +162,6 @@ public class Settings {
 		defaultSettingsMap.put(CFG_WINDOW_HEIGHT_KEY, CFG_WINDOW_HEIGHT_VALUE);
 		defaultSettingsMap.put(CFG_LOG_ROTATE_KEY, CFG_LOG_ROTATE_VALUE);
 		defaultSettingsMap.put(CFG_LOG_ROTATE_COUNT_KEY, CFG_LOG_ROTATE_COUNT_VALUE);
+		defaultSettingsMap.put(CFG_CANVAS_FPS_KEY, CFG_CANVAS_FPS_VALUE);
 	}
 }
