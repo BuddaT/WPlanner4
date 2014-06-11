@@ -102,6 +102,7 @@ public class WPlanner extends Application {
 					close();
 				}
 			});
+
 			menuFile.getItems().addAll(new SeparatorMenuItem(), quit);
 
 			menuBar.getMenus().addAll(menuFile, menuEdit, menuView);
